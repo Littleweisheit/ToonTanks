@@ -33,6 +33,31 @@ void ABasePawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+//处理Pawn死亡
+void ABasePawn::HandleDestuction()
+{
+	if (DeathPartic != nullptr && !this->IsHidden())
+		UGameplayStatics::SpawnEmitterAtLocation(this, DeathPartic, GetActorLocation(), GetActorRotation(),
+		                                         FVector(1.5));
+
+	if (DeathSound != nullptr && !this->IsHidden())
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
+	}
+	if (DeathCameraShakeBase != nullptr && !this->IsHidden())
+		GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(DeathCameraShakeBase);
+}
+
+FVector ABasePawn::GetSpawnPointLocation()
+{
+	return SpawnPoint->GetComponentLocation();
+}
+
+FVector ABasePawn::GetSpawnPointForwardVector()
+{
+	return SpawnPoint->GetForwardVector();
+}
+
 void ABasePawn::RotateTurrent(FVector LookAtTarget)
 {
 	FVector ToTaget = LookAtTarget - TurretMesh->GetComponentLocation();

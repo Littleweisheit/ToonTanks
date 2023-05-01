@@ -21,6 +21,7 @@ protected:
 	void RotateTurrent(FVector LookAtTarget);
 	void Fire();
 
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Componets", meta=(AllowPrivateAccess="true"))
 	class UCapsuleComponent* CapComp;
@@ -29,7 +30,11 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Componets", meta=(AllowPrivateAccess="true"))
 	UStaticMeshComponent* TurretMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Componets", meta=(AllowPrivateAccess="true"))
+	UParticleSystem* DeathPartic;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Componets", meta=(AllowPrivateAccess="true"))
 	USceneComponent* SpawnPoint;
+	UPROPERTY(EditAnywhere, Category="Combat")
+	USoundBase* DeathSound;
 
 
 public:
@@ -42,6 +47,15 @@ public:
 	float Speed = 30;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float TurnRate = 5;
-	UPROPERTY(EditDefaultsOnly,Category="Combat")
+	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	TSubclassOf<class AProjectile> ProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	TSubclassOf<UCameraShakeBase> DeathCameraShakeBase;
+
+
+	void HandleDestuction();
+
+	FVector GetSpawnPointLocation();
+	FVector GetSpawnPointForwardVector();
 };

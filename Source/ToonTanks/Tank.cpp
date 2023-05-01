@@ -20,6 +20,7 @@ void ATank::BeginPlay()
 	PlayerControllerRef = Cast<APlayerController>(GetController());
 }
 
+
 void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -29,7 +30,7 @@ void ATank::Tick(float DeltaTime)
 		PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, HitResult);
 		RotateTurrent(HitResult.ImpactPoint);
 
-		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10, 8, FColor::Red, false);
+		//DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10, 8, FColor::Red, false);
 	}
 }
 
@@ -44,7 +45,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::Move(float Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("Value is %f"), Value);
+	//UE_LOG(LogTemp, Display, TEXT("Value is %f"), Value);
 	double DeltaTime = UGameplayStatics::GetWorldDeltaSeconds(this);
 	FVector DeltaLocation = FVector(Value, 0, 0) * Speed * DeltaTime;
 	AddActorLocalOffset(DeltaLocation, true);
@@ -52,8 +53,16 @@ void ATank::Move(float Value)
 
 void ATank::Turn(float Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("Turn is %f"), Value);
+	//UE_LOG(LogTemp, Display, TEXT("Turn is %f"), Value);
 	double DeltaTime = UGameplayStatics::GetWorldDeltaSeconds(this);
 	FRotator DeltaRotation = FRotator(0, Value, 0) * TurnRate * DeltaTime;
 	AddActorLocalRotation(DeltaRotation, true);
+}
+
+void ATank::HandleDestuction()
+{
+	Super::HandleDestuction();
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
+		
 }

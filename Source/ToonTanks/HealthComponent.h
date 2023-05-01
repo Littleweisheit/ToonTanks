@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
@@ -32,5 +33,7 @@ private:
 	float MaxHealth=100;
 	
 	float Health=0;
+
+	class ATanksMode* TankGameMode;
 		
 };

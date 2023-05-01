@@ -27,6 +27,7 @@ private:
 
 	APlayerController* PlayerControllerRef;
 
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -35,4 +36,6 @@ public:
 	void Move(float Value);
 	void Turn(float Value);
 	void TurnTurret(float Value);
+	void HandleDestuction();
+	APlayerController* GetPlayerController() const {return PlayerControllerRef;}
 };

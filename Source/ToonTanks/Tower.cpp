@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
 
+
 ATower::ATower()
 {
 }
@@ -21,16 +22,15 @@ void ATower::BeginPlay()
 void ATower::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-		if (InFireRange())
-			RotateTurrent(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
-	
+
+	if (InFireRange())
+		RotateTurrent(GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
 }
 
 void ATower::CheckFireCondition()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Fireing"));
-	if (InFireRange())
+	if (InFireRange() && Visualed())
 		Fire();
 }
 
@@ -39,8 +39,34 @@ bool ATower::InFireRange()
 	if (Tank)
 	{
 		float Distance = FVector::Dist(Tank->GetActorLocation(), GetActorLocation());
-		if (Distance < FireRange)
+
+		if (Distance < FireRange && !Tank->IsHidden())
 			return true;
 	}
 	return false;
+}
+
+bool ATower::Visualed()
+{
+	FHitResult HitResult;
+	FVector Start = GetSpawnPointLocation();
+	FVector End = Start + GetSpawnPointForwardVector() * FireRange;
+
+	//DrawDebugLine(GetWorld(), Start, End, FColor::Red,false,2);
+	 GetWorld()->SweepSingleByChannel(HitResult, Start, End, FQuat::Identity,
+	                                        ECC_Visibility,
+	                                        FCollisionShape::MakeSphere(10));
+	//看是不是打到坦克了
+	if( HitResult.GetActor() == Tank)
+		return true;
+	else
+		return false;
+		
+}
+
+void ATower::HandleDestuction()
+{
+	Super::HandleDestuction();
+	Destroy();
+	
 }

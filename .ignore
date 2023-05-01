@@ -1,7 +1,7 @@
 .vscode
 Content
-DerivedDataCache/*
-Intermediate/*
-Platforms/*
-Saved/*
-.idea
+DerivedDataCache
+Intermediate
+Platforms
+Saved
+

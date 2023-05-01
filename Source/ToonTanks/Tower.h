@@ -31,4 +31,7 @@ public:
 	void CheckFireCondition();
 	class ATank* Tank;
 	bool InFireRange();
+	bool Visualed();
+	void HandleDestuction();
+	
 };

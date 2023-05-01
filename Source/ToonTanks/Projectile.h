@@ -29,6 +29,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UProjectileMovementComponent* ProjectileMovementComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Componets", meta=(AllowPrivateAccess="true"))
+	UParticleSystemComponent* ParticleSystemComponent;
+
 	UPROPERTY(EditDefaultsOnly, Category="Combat")
 	float InitSpeed = 200;
 
@@ -39,5 +42,17 @@ private:
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse,
 	           const FHitResult& Hit);
 	UPROPERTY(EditAnywhere)
-	float Damage=20;
+	float Damage = 20;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	class UParticleSystem* HitedParticle;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	class USoundBase* LaunchSound;
+	UPROPERTY(EditAnywhere, Category="Combat")
+	USoundBase* HitSound;
+	UPROPERTY(EditAnywhere, Category="Combat")
+	TSubclassOf<UCameraShakeBase> CameraShakeBaseClass;
+	
+		
 };
